@@ -10,6 +10,7 @@ interface PostInterface {
   image: string | null;
   likes_count: number;
   isLiked: boolean;
+  postSaved: boolean
 }
 
 interface Props {
@@ -46,6 +47,7 @@ export default function Posts(props: Props) {
           likes_count={post.likes_count}
           isLiked={post.isLiked}
           updateOptimisticPosts={updatePost}
+          postSaved={post.postSaved}
         />
       ))}
     </>

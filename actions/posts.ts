@@ -1,7 +1,7 @@
 "use server";
 import { verifyAuth } from "@/lib/auth";
 import { uploadImage } from "@/lib/cloudinary";
-import { insertPost, findLike, insertLike, deleteLike } from "@/lib/posts";
+import { insertPost, findLike, insertLike, deleteLike, savePost, deleteSavedPost, findSavedPost } from "@/lib/posts";
 import { revalidatePath } from "next/cache";
 import { redirect } from "next/navigation";
 
@@ -33,7 +33,7 @@ export async function createPost(formData: FormData): Promise<void> {
   redirect("/");
 }
 
-export async function toggleLike(postId: number): Promise<void> {
+export async function toggleLike(postId: number) {
   const { user } = await verifyAuth();
   const userId = user?.id;
   
@@ -47,6 +47,24 @@ export async function toggleLike(postId: number): Promise<void> {
       await deleteLike(postId, userId);
     } else {
       await insertLike(postId, userId);
+    }
+    revalidatePath("/", "page")
+  } catch (error) {
+    throw new Error("Failed.. " + error);
+  }
+}
+
+export async function toggleSave(postId: number) {
+  const { user } = await verifyAuth();
+  const userId = user?.id;
+
+  try {
+    const existingSave = await findSavedPost(postId, userId);
+    
+    if (existingSave) {
+      await deleteSavedPost(postId, userId);
+    } else {
+      await savePost(postId, userId);
     }
     revalidatePath("/", "page")
   } catch (error) {

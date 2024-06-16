@@ -8,6 +8,9 @@ body {
 .main-btn {
   @apply w-fit p-2 bg-sky-500 text-white rounded-md font-medium hover:bg-sky-600 transition focus:ring focus:ring-sky-200 flex gap-2 items-center;
 }
+.main-btn-sm {
+  @apply w-fit py-1 px-2 bg-sky-500 text-white rounded-md hover:bg-sky-600 transition focus:ring focus:ring-sky-200;
+}
 .nav-link {
   @apply block py-2 px-3 text-gray-900 rounded hover:bg-gray-200 md:hover:bg-transparent md:border-0 md:hover:text-sky-500 md:p-0
 }
