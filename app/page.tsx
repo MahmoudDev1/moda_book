@@ -8,7 +8,7 @@ export default async function Home() {
   const { user } = await verifyAuth();
   let userData = null;
   if (user) {
-    userData = getUserById(user!.id);
+    userData = await getUserById(user!.id);
   }
 
   return (
@@ -17,7 +17,7 @@ export default async function Home() {
         {user ? (
           <>
             <h3 className="text-2xl font-semibold">
-              Welcome, <span className="text-sky-500">{userData!.user.name}</span>
+              Welcome, <span className="text-sky-500">{userData?.user?.name}</span>
             </h3>
             <p className="text-gray-400 text-md">You can now create posts, check out new posts and like posts also.</p>
             <Link className="main-btn mt-5" href="/create-post">

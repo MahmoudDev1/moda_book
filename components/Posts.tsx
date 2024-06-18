@@ -23,7 +23,7 @@ export default function Posts(props: Props) {
     (prevPosts: PostInterface[], updatedPostId: number) => {
       return prevPosts.map((post) =>
         post.id === updatedPostId
-          ? { ...post, isLiked: !post.isLiked, likes_count: post.likes_count + (post.isLiked ? -1 : 1) }
+          ? { ...post, isLiked: !post.isLiked, likes_count: +post.likes_count + (post.isLiked ? -1 : 1) }
           : post
       );
     }

@@ -36,14 +36,10 @@ export async function createPost(formData: FormData): Promise<void> {
 export async function toggleLike(postId: number) {
   const { user } = await verifyAuth();
   const userId = user?.id;
-  
-  await new Promise((resolve) => {
-    setTimeout(resolve, 1000);
-  });
 
   try {
-    const existingLike = await findLike(postId, userId);
-    if (existingLike) {
+    const postLike = await findLike(postId, userId);
+    if (postLike && postLike.length > 0) {
       await deleteLike(postId, userId);
     } else {
       await insertLike(postId, userId);
@@ -61,7 +57,7 @@ export async function toggleSave(postId: number) {
   try {
     const existingSave = await findSavedPost(postId, userId);
     
-    if (existingSave) {
+    if (existingSave&& existingSave.length > 0) {
       await deleteSavedPost(postId, userId);
     } else {
       await savePost(postId, userId);

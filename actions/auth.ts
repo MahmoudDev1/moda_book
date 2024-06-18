@@ -76,19 +76,19 @@ export async function login(state: LoginState, formData: FormData) {
     errors.email = "Please enter a valid email address.";
   }
 
-  if(!password) {
-    errors.password = "Please enter a password."
+  if (!password) {
+    errors.password = "Please enter a password.";
   }
 
   if (!errors.email && !errors.password) {
-    const result = getUserByEmail(email)
-    if(!result.success) {
-      errors.email = "Email or password is wrong."
+    const result = await getUserByEmail(email);
+    if (!result.success || !result.user) {
+      errors.email = "Email or password is wrong.";
     } else {
-      const passwordValid = verifyPassword(result.user.password, password)
+      const passwordValid = verifyPassword(result.user.password, password);
 
-      if(!passwordValid) {
-        errors.email = "Email or password is wrong."
+      if (!passwordValid) {
+        errors.email = "Email or password is wrong.";
       } else {
         await createAuthSession(result.user.id);
         redirect("/");
@@ -100,6 +100,6 @@ export async function login(state: LoginState, formData: FormData) {
 }
 
 export async function logout() {
-  cookies().delete("auth_session")
-  return redirect("/login")
+  cookies().delete("auth_session");
+  return redirect("/login");
 }

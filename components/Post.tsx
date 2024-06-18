@@ -1,6 +1,7 @@
 import Image from "next/image";
 import LikePost from "./LikePost";
 import { toggleSave } from "@/actions/posts";
+import SavePost from "./SavePost";
 
 interface Props {
   id: number;
@@ -28,9 +29,7 @@ export default function Post(props: Props) {
           <LikePost id={props.id} isLiked={props.isLiked} updateOptimisticPosts={props.updateOptimisticPosts} />
           <span>{props.likes_count} Likes</span>
         </div>
-        <button className="main-btn-sm" onClick={() => toggleSave(props.id)}>
-          {props.postSaved ? "Remove from saved" : "Save Post"}
-        </button>
+        <SavePost id={props.id} postSaved={props.postSaved} />
       </div>
     </div>
   );
