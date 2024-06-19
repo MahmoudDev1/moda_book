@@ -18,7 +18,13 @@ export default function Post(props: Props) {
     <div className="post bg-white p-4 rounded-md shadow-sm mb-4">
       {props.image && (
         <div className="img relative h-80">
-          <Image src={props.image} alt={props.text} fill className="rounded-md" priority />
+          <Image
+            src={props.image}
+            alt={props.text}
+            fill
+            className="rounded-md"
+            sizes="(max-width: 768px) 100vw, (max-width: 1200px) 50vw, 33vw"
+          />
         </div>
       )}
       <h4 className={`font-semibold py-2 border-b whitespace-pre-line ${props.image ? "text-md" : "text-xl"}`}>
