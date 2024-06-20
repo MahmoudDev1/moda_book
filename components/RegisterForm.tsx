@@ -9,6 +9,7 @@ import PlusIcon from "@/components/PlusIcon";
 
 interface Errors {
   name: string | null;
+  image: string | null;
   email: string | null;
   password: string | null;
 }
@@ -42,12 +43,19 @@ function FormSubmit() {
 
 export default function RegisterForm() {
   const [formState, formAction] = useFormState<State, FormData>(signup, {
-    errors: { name: null, email: null, password: null },
+    errors: { name: null, image: null, email: null, password: null },
   });
 
   return (
     <form action={formAction} className="mt-6">
       <InputBox name="name" label="Name" placeholder="Enter your name" type="text" error={formState.errors.name} />
+      <InputBox
+        name="image"
+        label="Profile image (optional)"
+        placeholder="Add profile image"
+        type="file"
+        error={formState.errors.image}
+      />
       <InputBox
         name="email"
         label="Email address"

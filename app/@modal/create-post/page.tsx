@@ -10,6 +10,7 @@ export default async function Modal() {
   if(!user) {
     return redirect("/login")
   }
+  
   return (
     <>
       <Link className="overlay cursor-default" href="/"></Link>
