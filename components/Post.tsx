@@ -5,6 +5,7 @@ import SavePost from "./SavePost";
 
 interface Props {
   id: number;
+  index: number;
   text: string;
   image: string | null;
   likes_count: number;
@@ -24,6 +25,7 @@ export default function Post(props: Props) {
             fill
             className="rounded-md object-cover"
             sizes="(max-width: 768px) 100vw, (max-width: 1200px) 50vw, 33vw"
+            priority={props.index == 0 || props.index == 1}
           />
         </div>
       )}

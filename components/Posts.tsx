@@ -38,9 +38,10 @@ export default function Posts(props: Props) {
 
   return (
     <>
-      {optimisticPosts.map((post: PostInterface) => (
+      {optimisticPosts.map((post: PostInterface, index) => (
         <Post
           key={post.id}
+          index={index}
           id={post.id}
           image={post.image}
           text={post.text}
