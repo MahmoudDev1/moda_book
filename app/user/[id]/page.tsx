@@ -33,29 +33,32 @@ export default async function User(props: { params: { id: number } }) {
         <Image src={user.image || DefaultUser} alt="User Profile Image" width={70} height={70} />
         <div>
           <div className="mt-2 font-semibold text-lg">{user.name}</div>
-          <div className="text-gray-500">{posts.length == 1 ? "1 Post" : posts.length + " Posts" }</div>
+          <div className="text-gray-500">{posts.length == 1 ? "1 Post" : posts.length + " Posts"}</div>
         </div>
       </div>
       {posts.length > 0 && (
         <div className="posts mt-8 grid grid-cols-2 gap-2">
           {posts.map((post: Post) => {
-            return (
+            return post.image ? (
               <div key={post.id} className="post border p-2 rounded-sm">
-                {post.image && (
-                  <div className="img relative h-64">
-                    <Image
-                      src={post.image}
-                      alt={post.text}
-                      fill
-                      className="rounded-md object-cover"
-                      sizes="(max-width: 768px) 100vw, (max-width: 1200px) 50vw, 33vw"
-                    />
-                  </div>
-                )}
+                <div className="img relative h-64">
+                  <Image
+                    src={post.image}
+                    alt={post.text}
+                    fill
+                    className="rounded-md object-cover"
+                    sizes="(max-width: 768px) 100vw, (max-width: 1200px) 50vw, 33vw"
+                  />
+                </div>
                 <div className="flex justify-between mt-3">
                   <h2 className="font-medium text-lg">{post.text}</h2>
                   <span>Likes: {post.likes_count}</span>
                 </div>
+              </div>
+            ) : (
+              <div key={post.id} className="post border p-3 rounded-sm h-fit">
+                <h2 className="font-medium text-lg">{post.text}</h2>
+                <span>Likes: {post.likes_count}</span>
               </div>
             );
           })}

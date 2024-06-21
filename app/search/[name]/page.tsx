@@ -5,7 +5,7 @@ import { Suspense } from "react";
 import DefaultUser from "@/public/assets/default-user.jpg";
 
 async function SearchContent(props: { name: string }) {
-  const results = await searchByName(props.name);
+  const results = await searchByName(props.name, 50);
 
   if (!results.success || !results.users) {
     throw new Error(results.message);

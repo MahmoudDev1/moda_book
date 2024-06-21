@@ -54,6 +54,8 @@ export default function SearchForm() {
       if(e.target === input.current) {
         if(results.length > 0) {
           setShowResults(true)
+        } else {
+          setShowResults(false)
         }
       } else {
         setShowResults(false)
