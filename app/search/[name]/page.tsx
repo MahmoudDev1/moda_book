@@ -15,7 +15,7 @@ async function SearchContent(props: { name: string }) {
     <div className="users">
       {results.users.map((user) => {
         return (
-          <Link href={`/user/${user.id}`} className="user bg-white p-3 rounded-md shadow-sm block mb-2">
+          <Link key={user.id} href={`/user/${user.id}`} className="user bg-white p-3 rounded-md shadow-sm block mb-2">
             <div className="flex gap-2">
               <Image
                 src={user.image || DefaultUser}
