@@ -1,6 +1,5 @@
 import Image from "next/image";
 import LikePost from "./LikePost";
-import { toggleSave } from "@/actions/posts";
 import SavePost from "./SavePost";
 
 interface Props {

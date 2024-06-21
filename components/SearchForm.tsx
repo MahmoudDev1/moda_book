@@ -5,6 +5,8 @@ import Link from "next/link";
 import searchIcon from "@/public/assets/search-icon.svg";
 import { ChangeEvent, useCallback, useEffect, useRef, useState } from "react";
 import { throttle } from "lodash";
+import { useRouter } from 'next/navigation'
+
 interface User {
   id: number;
   name: string;
@@ -15,19 +17,23 @@ interface User {
 export default function SearchForm() {
   const [searchValue, setSearchValue] = useState("");
   const [results, setResults] = useState([]);
-  const input = useRef<HTMLInputElement>(null)
+  const [showResults, setShowResults] = useState(false);
+  const input = useRef<HTMLInputElement>(null);
+  const router = useRouter()
 
   const throttledSearch = useCallback(
     throttle((value: string) => {
       if (value === "") {
-        setResults([]);
+        setShowResults(false)
       } else {
         fetch(`/api/search/${value}`)
           .then((res) => res.json())
           .then((data) => {
+            setShowResults(true)
             setResults(data.users);
           })
           .catch((error) => {
+            setShowResults(false)
             console.error("Error fetching search results:", error);
           });
       }
@@ -46,13 +52,25 @@ export default function SearchForm() {
       e.stopPropagation()
       
       if(e.target === input.current) {
-        return;
+        if(results.length > 0) {
+          setShowResults(true)
+        }
       } else {
-        setResults([])
+        setShowResults(false)
       }
     })
-  }, [])
 
+    input.current?.addEventListener("keydown", (e) => {
+      if(e.key == "Enter") {
+        if(searchValue.length > 0) {
+          setResults([]);
+          setShowResults(false);
+          router.push(`/search/${searchValue}`)
+        }
+      }
+    })
+  }, [results, searchValue])
+  
   return (
     <>
       <div className="absolute inset-y-0 start-0 flex items-center pl-3 pointer-events-none">
@@ -66,7 +84,7 @@ export default function SearchForm() {
         onChange={handleChange}
         ref={input}
       />
-      {results.length > 0 && (
+      {showResults && (
         <div className="results bg-white py-2 rounded-md absolute w-full md:top-14 shadow-md z-50">
           {results.map((user: User) => {
             return (
