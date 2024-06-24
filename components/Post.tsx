@@ -1,6 +1,9 @@
 import Image from "next/image";
 import LikePost from "./LikePost";
 import SavePost from "./SavePost";
+import DefaultUser from "@/public/assets/default-user.jpg";
+import Link from "next/link";
+import { useEffect, useState } from "react";
 
 interface Props {
   id: number;
@@ -11,11 +14,25 @@ interface Props {
   isLiked: boolean;
   updateOptimisticPosts: Function;
   postSaved: boolean;
+  user: { id: number; name: string; image: string };
+  created_at: Date;
 }
 
 export default function Post(props: Props) {
+  const [postDate, setPostDate] = useState('')
+  useEffect(() => {
+    setPostDate(new Date(props.created_at).toLocaleDateString())
+  }, [])
+
   return (
     <div className="post bg-white p-4 rounded-md shadow-sm mb-4">
+      <div className="user flex gap-2 mb-3">
+        <Image src={props.user.image || DefaultUser} alt="User Profile Image" width={40} height={40} />
+        <div>
+          <Link className="font-semibold hover:underline" href={`/user/${props.user.id}`}>{props.user.name}</Link>
+          <div className="text-gray-500 -mt-1">{postDate}</div>
+        </div>
+      </div>
       {props.image && (
         <div className="img relative h-64 md:h-80">
           <Image

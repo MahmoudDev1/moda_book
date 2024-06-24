@@ -7,7 +7,9 @@ interface PostInterface {
   image: string | null;
   likes_count: number;
   isLiked: boolean;
-  postSaved: boolean
+  postSaved: boolean;
+  user: { id: number; name: string };
+  created_at: Date
 }
 
 export default async function HomePosts() {

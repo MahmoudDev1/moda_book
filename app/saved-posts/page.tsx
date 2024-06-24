@@ -9,6 +9,8 @@ interface PostInterface {
   likes_count: number;
   isLiked: boolean;
   postSaved: boolean;
+  user: { id: number; name: string; image: string };
+  created_at: Date
 }
 
 async function SavedPosts() {

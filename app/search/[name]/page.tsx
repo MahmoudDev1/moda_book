@@ -3,12 +3,13 @@ import Image from "next/image";
 import Link from "next/link";
 import { Suspense } from "react";
 import DefaultUser from "@/public/assets/default-user.jpg";
+import { notFound } from "next/navigation";
 
 async function SearchContent(props: { name: string }) {
-  const results = await searchByName(props.name, 50);
-
+  const results = await searchByName(decodeURIComponent(props.name.toString()), 50);
+  
   if (!results.success || !results.users) {
-    throw new Error(results.message);
+    return notFound()
   }
 
   return (

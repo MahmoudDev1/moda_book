@@ -10,7 +10,9 @@ interface PostInterface {
   image: string | null;
   likes_count: number;
   isLiked: boolean;
-  postSaved: boolean
+  postSaved: boolean;
+  user: { id: number; name: string; image: string };
+  created_at: Date
 }
 
 interface Props {
@@ -49,6 +51,8 @@ export default function Posts(props: Props) {
           isLiked={post.isLiked}
           updateOptimisticPosts={updatePost}
           postSaved={post.postSaved}
+          user={post.user}
+          created_at={post.created_at}
         />
       ))}
     </>
