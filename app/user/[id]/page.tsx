@@ -30,7 +30,7 @@ export default async function User(props: { params: { id: number } }) {
   return (
     <div className="box bg-white shadow-sm p-3 rounded-md">
       <div className="flex gap-2">
-        <Image src={user.image || DefaultUser} alt="User Profile Image" width={70} height={70} />
+        <Image src={user.image || DefaultUser} alt="User Profile Image" width={70} height={70} className="rounded-full" />
         <div>
           <div className="mt-2 font-semibold text-lg">{user.name}</div>
           <div className="text-gray-500">{posts.length == 1 ? "1 Post" : posts.length + " Posts"}</div>

@@ -27,7 +27,7 @@ export default function Post(props: Props) {
   return (
     <div className="post bg-white p-4 rounded-md shadow-sm mb-4">
       <div className="user flex gap-2 mb-3">
-        <Image src={props.user.image || DefaultUser} alt="User Profile Image" width={40} height={40} />
+        <Image src={props.user.image || DefaultUser} alt="User Profile Image" width={45} height={45} className="rounded-full" />
         <div>
           <Link className="font-semibold hover:underline" href={`/user/${props.user.id}`}>{props.user.name}</Link>
           <div className="text-gray-500 -mt-1">{postDate}</div>
