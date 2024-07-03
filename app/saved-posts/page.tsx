@@ -1,4 +1,5 @@
 import Posts from "@/components/Posts";
+import SkeletonPost from "@/components/SkeletonPost";
 import { getSavedPostsData } from "@/lib/posts";
 import { Suspense } from "react";
 
@@ -23,5 +24,5 @@ async function SavedPosts() {
 }
 
 export default async function SavedPostsPage() {
-  return <Suspense fallback={<h1 className="text-xl font-semibold">Loading Data...</h1>}><SavedPosts /></Suspense>
+  return <Suspense fallback={<SkeletonPost />}><SavedPosts /></Suspense>
 }

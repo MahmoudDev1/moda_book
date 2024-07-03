@@ -1,4 +1,5 @@
 import HomePosts from "@/components/HomePosts";
+import SkeletonPost from "@/components/SkeletonPost";
 import { verifyAuth } from "@/lib/auth";
 import { getUserById } from "@/lib/user";
 import Link from "next/link";
@@ -39,7 +40,16 @@ export default async function Home() {
           </>
         )}
       </div>
-      <Suspense fallback={<h2 className="text-2xl font-semibold text-center mt-10">Loading...</h2>}>{user && <HomePosts />}</Suspense>
+      <Suspense
+        fallback={
+          <>
+            <SkeletonPost />
+            <SkeletonPost />
+          </>
+        }
+      >
+        {user && <HomePosts />}
+      </Suspense>
     </div>
   );
 }
