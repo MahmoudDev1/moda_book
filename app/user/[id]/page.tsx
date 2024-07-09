@@ -1,9 +1,10 @@
-import { getUserById } from "@/lib/user";
+import { getUserById, getUserId } from "@/lib/user";
 import Image from "next/image";
 import { notFound } from "next/navigation";
 import DefaultUser from "@/public/assets/default-user.jpg";
 import { QueryResultRow } from "@vercel/postgres";
 import { getUserPosts } from "@/lib/posts";
+import UserRequestButton from "@/components/UserRequestButton";
 
 interface User {
   id: number;
@@ -26,15 +27,29 @@ export default async function User(props: { params: { id: number } }) {
   }
   const user: QueryResultRow = result.user;
   const posts: QueryResultRow = await getUserPosts(user.id);
+  const authenticatedUserId = await getUserId()
 
   return (
     <div className="box bg-white shadow-sm p-3 rounded-md">
-      <div className="flex gap-2">
-        <Image src={user.image || DefaultUser} alt="User Profile Image" width={70} height={70} className="rounded-full" />
-        <div>
-          <div className="mt-2 font-semibold text-lg">{user.name}</div>
-          <div className="text-gray-500">{posts.length == 1 ? "1 Post" : posts.length + " Posts"}</div>
+      <div className="flex justify-between flex-wrap gap-10 items-center">
+        <div className="flex gap-2">
+          <Image
+            src={user.image || DefaultUser}
+            alt="User Profile Image"
+            width={70}
+            height={70}
+            className="rounded-full"
+          />
+          <div>
+            <div className="mt-2 font-semibold text-lg">{user.name}</div>
+            <div className="text-gray-500">{posts.length == 1 ? "1 Post" : posts.length + " Posts"}</div>
+          </div>
         </div>
+        {
+          authenticatedUserId != user.id && (
+            <UserRequestButton friendRequestStatus={result.friendRequestStatus} id={props.params.id} />
+          )
+        }
       </div>
       {posts.length > 0 && (
         <div className="posts mt-8 grid grid-cols-2 gap-2">

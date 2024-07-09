@@ -80,7 +80,7 @@ export default function SearchForm() {
       </div>
       <input
         type="text"
-        className="block w-full md:w-64 lg:w-80 p-2 ps-10 text-sm text-gray-900 border-2 border-gray-300 rounded-lg bg-gray-50 outline-none focus:border-sky-500 transition"
+        className="block w-full md:w-64 xl:w-80 p-2 ps-10 text-sm text-gray-900 border-2 border-gray-300 rounded-lg bg-gray-50 outline-none focus:border-sky-500 transition"
         placeholder="Search by user name..."
         value={searchValue}
         onChange={handleChange}

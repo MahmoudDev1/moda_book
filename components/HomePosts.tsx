@@ -15,5 +15,9 @@ interface PostInterface {
 export default async function HomePosts() {
   let posts = (await getPosts()).posts as PostInterface[];
   
+  if(posts.length == 0) {
+    return <h2 className="font-semibold text-lg">There is no posts to show, try adding friends if you don&apos;t have.</h2>
+  }
+
   return <Posts posts={posts} />;
 }
