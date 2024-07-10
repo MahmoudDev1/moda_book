@@ -7,8 +7,11 @@ import "@fortawesome/fontawesome-free/css/all.min.css";
 import { FaHouse, FaPowerOff } from "react-icons/fa6";
 import { FaUserFriends } from "react-icons/fa";
 import { BiSolidBookmarks } from "react-icons/bi";
+import { useEffect, useState } from "react";
+import PusherClient from "pusher-js";
 
-export default function NavLinks(props: { isAuth: boolean; friendRequestsCount: number }) {
+export default function NavLinks(props: { isAuth: boolean; userId: string | undefined, friendRequestsCount: number }) {
+  const [friendRequestsCountState, setFriendRequestsCountState] = useState(props.friendRequestsCount)
   const pathname = usePathname();
 
   function logoutHandler(event: any) {
@@ -16,6 +19,30 @@ export default function NavLinks(props: { isAuth: boolean; friendRequestsCount: 
 
     logout();
   }
+
+  function handleAddFriendRequest() {
+    setFriendRequestsCountState(prev => prev + 1)
+  }
+
+  function handleRemoveFriendRequest() {
+    setFriendRequestsCountState(prev => prev - 1)
+  }
+
+  useEffect(() => {
+    const pusherClient = new PusherClient("a61348eb9dd39fc40d2b", {
+      cluster: "mt1",
+    });
+    
+    pusherClient.subscribe(`friend_request-${props.userId}`);
+    pusherClient.bind("friend_request_event", handleAddFriendRequest);
+    pusherClient.bind("remove_friend_request_event", handleRemoveFriendRequest);
+    
+    return () => {
+      pusherClient.unsubscribe(`friend_request-${props.userId}`);
+      pusherClient.unbind("friend_request_event", handleAddFriendRequest);
+      pusherClient.unbind("remove_friend_request_event", handleRemoveFriendRequest);
+    };
+  }, []);
 
   return (
     <>
@@ -45,9 +72,9 @@ export default function NavLinks(props: { isAuth: boolean; friendRequestsCount: 
             >
               <FaUserFriends fontSize={21} className="inline" />
               <div className="md:hidden inline pl-2">Friends</div>
-              {props.friendRequestsCount > 0 && (
+              {friendRequestsCountState > 0 && (
                 <div className="count absolute z-10 bg-red-600 rounded-full w-[18px] h-[18px] flex justify-center items-center text-white text-[12px] right-[-5px] top-[-10px]">
-                  {props.friendRequestsCount}
+                  {+friendRequestsCountState}
                 </div>
               )}
             </Link>
