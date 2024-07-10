@@ -72,7 +72,7 @@ export default async function User(props: { params: { id: number } }) {
                     sizes="(max-width: 768px) 100vw, (max-width: 1200px) 50vw, 33vw"
                   />
                 </div>
-                <div className="flex justify-between mt-3">
+                <div className="flex justify-between mt-3 flex-wrap">
                   <h2 className="font-medium text-lg">{post.text}</h2>
                   <span>Likes: {post.likes_count}</span>
                 </div>
