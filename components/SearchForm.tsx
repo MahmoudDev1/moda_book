@@ -5,7 +5,7 @@ import Link from "next/link";
 import searchIcon from "@/public/assets/search-icon.svg";
 import { ChangeEvent, useCallback, useEffect, useRef, useState } from "react";
 import { throttle } from "lodash";
-import { useRouter } from 'next/navigation'
+import { useRouter } from "next/navigation";
 
 interface User {
   id: number;
@@ -19,21 +19,21 @@ export default function SearchForm() {
   const [results, setResults] = useState([]);
   const [showResults, setShowResults] = useState(false);
   const input = useRef<HTMLInputElement>(null);
-  const router = useRouter()
+  const router = useRouter();
 
   const throttledSearch = useCallback(
     throttle((value: string) => {
       if (value === "") {
-        setShowResults(false)
+        setShowResults(false);
       } else {
-        fetch(`/api/search/${value}`)
+        fetch(`/api/search/${value}`, { cache: "no-store" })
           .then((res) => res.json())
           .then((data) => {
-            setShowResults(true)
+            setShowResults(true);
             setResults(data.users);
           })
           .catch((error) => {
-            setShowResults(false)
+            setShowResults(false);
             console.error("Error fetching search results:", error);
           });
       }
@@ -49,30 +49,30 @@ export default function SearchForm() {
 
   useEffect(() => {
     window.addEventListener("click", (e) => {
-      e.stopPropagation()
-      
-      if(e.target === input.current) {
-        if(results.length > 0) {
-          setShowResults(true)
+      e.stopPropagation();
+
+      if (e.target === input.current) {
+        if (results.length > 0) {
+          setShowResults(true);
         } else {
-          setShowResults(false)
+          setShowResults(false);
         }
       } else {
-        setShowResults(false)
+        setShowResults(false);
       }
-    })
+    });
 
     input.current?.addEventListener("keydown", (e) => {
-      if(e.key == "Enter") {
-        if(searchValue.length > 0) {
+      if (e.key == "Enter") {
+        if (searchValue.length > 0) {
           setResults([]);
           setShowResults(false);
-          router.push(`/search/${searchValue}`)
+          router.push(`/search/${searchValue}`);
         }
       }
-    })
-  }, [results, searchValue])
-  
+    });
+  }, [results, searchValue]);
+
   return (
     <>
       <div className="absolute inset-y-0 start-0 flex items-center pl-3 pointer-events-none">
@@ -90,7 +90,11 @@ export default function SearchForm() {
         <div className="results bg-white py-2 rounded-md absolute w-full md:top-14 shadow-md z-50">
           {results.map((user: User) => {
             return (
-              <Link key={user.id} href={`/user/${user.id}`} className="result p-2 flex items-center gap-3 transition hover:bg-gray-200">
+              <Link
+                key={user.id}
+                href={`/user/${user.id}`}
+                className="result p-2 flex items-center gap-3 transition hover:bg-gray-200"
+              >
                 <Image
                   src={user.image || DefaultUser}
                   alt="User profile image"
