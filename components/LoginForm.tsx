@@ -2,7 +2,7 @@
 
 import { login } from "@/actions/auth";
 import { useFormState, useFormStatus } from "react-dom";
-import Spinner from "./Spinner";
+import Spinner from "./ui/Spinner";
 import Link from "next/link";
 import InputBox from "./InputBox";
 import LoginIcon from "./LoginIcon";

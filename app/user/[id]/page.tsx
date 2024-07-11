@@ -4,7 +4,7 @@ import { notFound } from "next/navigation";
 import DefaultUser from "@/public/assets/default-user.jpg";
 import { QueryResultRow } from "@vercel/postgres";
 import { getUserPosts } from "@/lib/posts";
-import UserRequestButton from "@/components/UserRequestButton";
+import UserRequestButton from "@/components/user/UserRequestButton";
 import { RiAdminFill } from "react-icons/ri";
 
 interface User {

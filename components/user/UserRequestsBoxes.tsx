@@ -7,6 +7,7 @@ import { useFormStatus } from "react-dom";
 import { startTransition, useEffect, useOptimistic } from "react";
 import PusherClient from "pusher-js";
 import { useRouter } from "next/navigation";
+import { MdOutlineAccountBox } from "react-icons/md";
 
 function AcceptRequestButton() {
   const { pending } = useFormStatus();
@@ -20,7 +21,7 @@ function AcceptRequestButton() {
   );
 }
 
-export default function UserFriendRequests({
+export default function UserFriendRequestsBoxes({
   users,
   userId,
 }: {
@@ -36,10 +37,10 @@ export default function UserFriendRequests({
     });
     await deleteFriendRequests(userId);
   };
-  const router = useRouter()
+  const router = useRouter();
 
   function handleRequestChanges() {
-    router.refresh()
+    router.refresh();
   }
 
   useEffect(() => {
@@ -60,27 +61,35 @@ export default function UserFriendRequests({
 
   return (
     <>
-      {users &&
-        users.length > 0 &&
-        optimisticUsers?.map((user) => (
-          <div key={user.request_id} className="box rounded-md shadow-sm bg-white overflow-hidden">
-            <div className="img relative h-[130px]">
-              <Image src={user.image || DefaultUser} alt="User Image" fill className="object-cover" />
+      <div className="grid grid-cols-2 md:grid-cols-4 gap-5">
+        {users &&
+          users.length > 0 &&
+          optimisticUsers?.map((user) => (
+            <div key={user.request_id} className="box rounded-md shadow-sm bg-white overflow-hidden">
+              <div className="img relative h-[130px]">
+                <Image src={user.image || DefaultUser} alt="User Image" fill className="object-cover" />
+              </div>
+              <div className="p-3">
+                <h2 className="font-semibold">{user.name}</h2>
+                <form action={acceptFriendRequest.bind(null, user.from_id)}>
+                  <AcceptRequestButton />
+                </form>
+                <button
+                  onClick={() => handleDelete(user.from_id)}
+                  className="mt-2 w-full rounded-md p-2 bg-red-300 text-red-900 font-semibold text-sm"
+                >
+                  Delete Request
+                </button>
+              </div>
             </div>
-            <div className="p-3">
-              <h2 className="font-semibold">{user.name}</h2>
-              <form action={acceptFriendRequest.bind(null, user.from_id)}>
-                <AcceptRequestButton />
-              </form>
-              <button
-                onClick={() => handleDelete(user.from_id)}
-                className="mt-2 w-full rounded-md p-2 bg-red-300 text-red-900 font-semibold text-sm"
-              >
-                Delete Request
-              </button>
-            </div>
-          </div>
-        ))}
+          ))}
+      </div>
+      {users?.length == 0 && (
+        <div className="text-center">
+          <MdOutlineAccountBox className="text-gray-700 mb-2 mx-auto" fontSize={60} />
+          <h2 className="font-semibold text-xl text-gray-700">You have no friend requests yet.</h2>
+        </div>
+      )}
     </>
   );
 }

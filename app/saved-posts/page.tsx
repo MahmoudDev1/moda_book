@@ -1,4 +1,4 @@
-import Posts from "@/components/Posts";
+import Posts from "@/components/posts/Posts";
 import SkeletonPost from "@/components/SkeletonPost";
 import { getSavedPostsData } from "@/lib/posts";
 import { Suspense } from "react";

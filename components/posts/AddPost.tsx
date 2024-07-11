@@ -1,7 +1,7 @@
 "use client";
 import { ChangeEvent, useRef, useState } from "react";
 import { useFormStatus } from "react-dom";
-import Spinner from "./Spinner";
+import Spinner from "../ui/Spinner";
 import { createPost } from "@/actions/posts";
 import Image from "next/image";
 

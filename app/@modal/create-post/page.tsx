@@ -1,6 +1,6 @@
 
 import Link from "next/link";
-import AddPost from "@/components/AddPost";
+import AddPost from "@/components/posts/AddPost";
 import { verifyAuth } from "@/lib/auth";
 import { redirect } from "next/navigation";
 import Image from "next/image";

@@ -1,4 +1,4 @@
-import Posts from "./Posts";
+import Posts from "./posts/Posts";
 import { getPosts } from "@/lib/posts";
 
 interface PostInterface {

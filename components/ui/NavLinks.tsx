@@ -4,7 +4,7 @@ import { logout } from "@/actions/auth";
 import Link from "next/link";
 import { usePathname } from "next/navigation";
 import "@fortawesome/fontawesome-free/css/all.min.css";
-import { FaHouse, FaPowerOff } from "react-icons/fa6";
+import { FaHouse, FaPowerOff, FaUserPlus } from "react-icons/fa6";
 import { FaUserFriends } from "react-icons/fa";
 import { BiSolidBookmarks } from "react-icons/bi";
 import { useEffect, useState } from "react";
@@ -94,7 +94,7 @@ export default function NavLinks(props: { isAuth: boolean; userId: string | unde
               className={pathname.startsWith("/register") ? "nav-link-active" : "nav-link"}
               aria-current="page"
             >
-              <i className="fa fa-user-plus"></i>
+              <FaUserPlus fontSize={21} className="inline" />
               <div className="md:hidden inline pl-2">Register</div>
             </Link>
           </li>

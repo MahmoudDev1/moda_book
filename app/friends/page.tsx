@@ -1,19 +1,8 @@
-import UserFriendsBoxes from "@/components/UserFriends";
-import UserFriendRequests from "@/components/UserRequests";
-import { getUserFriends, getUserId } from "@/lib/user";
-import { QueryResultRow } from "@vercel/postgres";
+import UserFriendsContainer from "@/components/user/UserFriendsContainer";
+import UserRequestsContainer from "@/components/user/UserRequestsCountainer";
 import { Suspense } from "react";
 
-interface Friend extends QueryResultRow {
-  id: number;
-  name: string;
-  image: string | null;
-}
-
 export default async function UserFriends() {
-  const { friends, friendRequests } = await getUserFriends();
-  const userId = await getUserId();
-
   return (
     <>
       <Suspense
@@ -24,16 +13,10 @@ export default async function UserFriends() {
             <div className="animate-pulse h-[280px] w-[170px] bg-gray-300 rounded-md"></div>
           </div>
         }
-        >
-        {friends?.length == 0 && friendRequests?.length == 0 && (
-          <h2 className="font-semibold text-xl text-gray-500">
-            You don&apos;t have friends, friends added and friend requests will appear here.
-          </h2>
-        )}
-        <div className="grid grid-cols-2 md:grid-cols-4 gap-5">
-          <UserFriendsBoxes friends={friends as Friend[]} />
-          <UserFriendRequests users={friendRequests} userId={userId} />
-        </div>
+      >
+        <UserFriendsContainer />
+        <div className="line h-[1px] w-full bg-gray-400 my-5"></div>
+        <UserRequestsContainer />
       </Suspense>
     </>
   );

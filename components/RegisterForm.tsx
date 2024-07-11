@@ -4,8 +4,8 @@ import InputBox from "@/components/InputBox";
 import Link from "next/link";
 import { useFormState, useFormStatus } from "react-dom";
 import { signup } from "@/actions/auth";
-import Spinner from "@/components/Spinner";
-import PlusIcon from "@/components/PlusIcon";
+import Spinner from "@/components/ui/Spinner";
+import PlusIcon from "@/components/ui/PlusIcon";
 
 interface Errors {
   name: string | null;
