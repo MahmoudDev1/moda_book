@@ -14,6 +14,8 @@ export default async function Home() {
 
   return (
     <div className="home">
+      <Link href="/friends">Friends</Link>
+      <Link href="/saved-posts">Saved Posts</Link>
       <div className="box bg-white p-5 rounded-md shadow-sm mb-4">
         {user ? (
           <>
