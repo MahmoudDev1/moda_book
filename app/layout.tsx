@@ -1,6 +1,7 @@
 import type { Metadata } from "next";
 import "./globals.css";
 import Navbar from "@/components/Navbar";
+import { Analytics } from "@vercel/analytics/react"
 
 export const metadata: Metadata = {
   title: "Modabook",
@@ -14,6 +15,7 @@ export default function RootLayout({ children, modal } : { children: React.React
         <Navbar />
         <div className="mx-auto max-w-screen-md px-4 mt-5">{children}</div>
         {modal}
+        <Analytics />
       </body>
     </html>
   );
