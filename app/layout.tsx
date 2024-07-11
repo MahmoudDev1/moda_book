@@ -12,7 +12,7 @@ export default function RootLayout({ children, modal } : { children: React.React
   return (
     <html lang="en">
       <body>
-        {/* <Navbar /> */}
+        <Navbar />
         <div className="mx-auto max-w-screen-md px-4 mt-5">{children}</div>
         {modal}
         <Analytics />
