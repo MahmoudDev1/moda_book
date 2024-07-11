@@ -16,25 +16,25 @@ export default async function UserFriends() {
 
   return (
     <>
-      {friends?.length == 0 && friendRequests?.length == 0 && (
-        <h2 className="font-semibold text-xl text-gray-500">
-          You don&apos;t have friends, friends added and friend requests will appear here.
-        </h2>
-      )}
-      <div className="grid grid-cols-2 md:grid-cols-4 gap-5">
-        <Suspense
-          fallback={
-            <>
-              <div className="animate-pulse h-[280px] w-[170px] bg-gray-300 rounded-md"></div>
-              <div className="animate-pulse h-[280px] w-[170px] bg-gray-300 rounded-md"></div>
-              <div className="animate-pulse h-[280px] w-[170px] bg-gray-300 rounded-md"></div>
-            </>
-          }
+      <Suspense
+        fallback={
+          <div className="grid grid-cols-2 md:grid-cols-4 gap-5">
+            <div className="animate-pulse h-[280px] w-[170px] bg-gray-300 rounded-md"></div>
+            <div className="animate-pulse h-[280px] w-[170px] bg-gray-300 rounded-md"></div>
+            <div className="animate-pulse h-[280px] w-[170px] bg-gray-300 rounded-md"></div>
+          </div>
+        }
         >
+        {friends?.length == 0 && friendRequests?.length == 0 && (
+          <h2 className="font-semibold text-xl text-gray-500">
+            You don&apos;t have friends, friends added and friend requests will appear here.
+          </h2>
+        )}
+        <div className="grid grid-cols-2 md:grid-cols-4 gap-5">
           <UserFriendsBoxes friends={friends as Friend[]} />
           <UserFriendRequests users={friendRequests} userId={userId} />
-        </Suspense>
-      </div>
+        </div>
+      </Suspense>
     </>
   );
 }
